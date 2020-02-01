@@ -1,0 +1,16 @@
+{
+  "name": "unique-package-lister",
+  "version": "1.0.0",
+  "description": "this program will list all the unique packages in your package.lock.json",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "alokraj68",
+  "license": "ISC",
+  "dependencies": {
+    "excel4node": "^1.7.2",
+    "fs": "0.0.1-security"
+  }
+}
