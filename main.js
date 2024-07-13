@@ -1,9 +1,10 @@
-const {
-    promises: fs
-} = require("fs");
+"use strict";
+exports.__esModule = true;
+
+import { fs  }from '[fs]';
 const excel = require('excel4node');
 
-var filePath = "./source/package-lock.json";
+var filePath = "./source/package-shome.json";
 
 var obj;
 
@@ -23,14 +24,17 @@ var workbook = new excel.Workbook();
 var worksheet = workbook.addWorksheet('Sheet 1');
 worksheet.cell(1, 1).string('Package Name');
 worksheet.cell(1, 2).string('Version');
-worksheet.cell(1, 3).string('Url');
-worksheet.cell(1, 4).string('Dependencies');
 
 
 (async () => {
     const data = await getContent(filePath);
     obj = JSON.parse(data);
-    await walk(obj.dependencies);
+    objDep = {
+        ...obj.dependencies,
+        ...obj.devDependencies,
+        ...obj.peerDependencies,
+    }
+    await walk(objDep);
     workbook.write('Excel.xlsx');
 })();
 
@@ -43,28 +47,23 @@ async function walk(toWalk) {
             // console.log("values:",value); //gives all the values of the key
             var cellNumber = i + 2;
             worksheet.cell(cellNumber, 1).string(key);
-            worksheet.cell(cellNumber, 2).string(value.version);
-            worksheet.cell(cellNumber, 3).string(value.resolved);
-            if (value.requires) {
-                var dependencies;
-                var dependenciesArray = [];
-                for (let resolverKeys = Object.keys(value.requires), j = 0, end = resolverKeys.length; j < end; j++) {
-                    dependenciesArray.push(resolverKeys[j]);
-                };
-                dependenciesArray.forEach(function (element, keys) {
-                    if (keys == 0) {
-                        dependencies = element;
-                    } else {
-                        dependencies += " ," + element;
-                    }
-                });
-                worksheet.cell(cellNumber, 4).string(dependencies);
-            }else{
-                worksheet.cell(cellNumber, 4).string("NA");
-            }
+            worksheet.cell(cellNumber, 2).string(value);
             if (i == keys.length - 1) {
                 resolve();
             }
         };
     });
 };
+
+const button = document.getElementById('upload');
+button.addEventListener('onchange', function() {
+    console.log('file')
+})
+
+
+function showFile(input) {
+    let file = input.files[0];
+  
+    alert(`File name: ${file.name}`); // например, my.png
+    alert(`Last modified: ${file.lastModified}`); // например, 1552830408824
+  }

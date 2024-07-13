@@ -1,15 +1,16 @@
 {
-  "name": "unique-package-lister",
+  "name": "dependencies-reader",
   "version": "1.0.0",
-  "description": "this program will list all the unique packages in your package.lock.json",
+  "description": "dependencies-reader generates list of all unique packages in your package.lock.json and package.json files",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node main.js"
   },
-  "author": "alokraj68",
+  "author": "quikki13",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "excel4node": "^1.7.2",
     "fs": "0.0.1-security"
   }
